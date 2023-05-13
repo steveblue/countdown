@@ -2,6 +2,7 @@ import { Component, html, css, CustomElement } from "@readymade/core";
 import { DjAppConfig, TimeCode } from "./types";
 import { CountdownElement, SchedulerElement } from ".";
 import { convertTimeCodeToDate } from "./util";
+import { APP_CONFIG_ID } from "./config";
 
 function stringify(value: any) {
   return JSON.stringify(value);
@@ -48,9 +49,9 @@ class DjApp extends CustomElement {
   isTriggered: boolean = false;
   constructor() {
     super();
-    if (!localStorage.getItem("DJ-APP-CONFIG")) {
+    if (!localStorage.getItem(APP_CONFIG_ID)) {
       localStorage.setItem(
-        "DJ-APP-CONFIG",
+        APP_CONFIG_ID,
         JSON.stringify({
           startTime: {
             hour: "12",
@@ -67,7 +68,7 @@ class DjApp extends CustomElement {
         })
       );
     }
-    this.config = JSON.parse(localStorage.getItem("DJ-APP-CONFIG") as string);
+    this.config = JSON.parse(localStorage.getItem(APP_CONFIG_ID) as string);
     if (this.config.startTime && this.config.endTime) {
       this.setDuration();
       window.addEventListener("djResetCountdown", () => {
