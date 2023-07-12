@@ -1,7 +1,7 @@
-import { TimeCode } from "./types";
+import { APP_CONFIG_ID, DEFAULT_DJ_APP_CONFIG } from "./config";
+import { DjAppConfig, TimeCode } from "./types";
 
 function convertTimeCodeToDate(timecode: TimeCode): Date {
-  // TODO: adjust for eclipse after 12am
   const today = new Date(Date.now()).toDateString();
   return new Date(
     `${today} ${
@@ -11,5 +11,37 @@ function convertTimeCodeToDate(timecode: TimeCode): Date {
     }:${timecode.minute}:${timecode.second}`
   );
 }
+function saveDjAppConfig(config: DjAppConfig) {
+  localStorage.setItem(APP_CONFIG_ID, JSON.stringify(config));
+  window.dispatchEvent(
+    new CustomEvent("DJAppConfigChange", { detail: fetchDjAppConfig() })
+  );
+}
 
-export { convertTimeCodeToDate };
+function fetchDjAppConfig(): DjAppConfig {
+  if (!hasDjAppConfig()) {
+    saveDjAppConfig(DEFAULT_DJ_APP_CONFIG);
+  }
+  return parse(localStorage.getItem(APP_CONFIG_ID)) as DjAppConfig;
+}
+
+function hasDjAppConfig(): boolean {
+  return !!localStorage.getItem(APP_CONFIG_ID);
+}
+
+function stringify(value: any): string {
+  return JSON.stringify(value);
+}
+
+function parse(value: any): any {
+  return JSON.parse(value);
+}
+
+export {
+  convertTimeCodeToDate,
+  hasDjAppConfig,
+  saveDjAppConfig,
+  fetchDjAppConfig,
+  parse,
+  stringify,
+};

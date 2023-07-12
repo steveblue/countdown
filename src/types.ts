@@ -6,6 +6,6 @@ export type TimeCode = {
 };
 
 export type DjAppConfig = {
-  startTime: TimeCode | null;
-  endTime: TimeCode | null;
+  startTime: TimeCode;
+  endTime: TimeCode;
 };

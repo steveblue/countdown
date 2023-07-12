@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:es": "NODE_ENV=production node esbuild.js && npm run copy:es",
+    "copy:es": "cp src/index.css dist/src/index.css && cp index.html dist/index.html",
+    "clean": "rm -rf dist",
     "preview": "vite preview"
   },
   "dependencies": {
