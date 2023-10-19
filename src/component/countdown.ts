@@ -106,6 +106,12 @@ class CountdownElement extends CustomElement {
       minutes < 10 ? `${"0" + minutes.toString()}` : minutes.toString();
     this.secondElement.innerText =
       seconds < 10 ? `${"0" + seconds.toString()}` : seconds.toString();
+    document.title =
+      this.hourElement.innerText +
+      ":" +
+      this.minuteElement.innerText +
+      ":" +
+      this.secondElement.innerText;
   }
   frame() {
     window.requestAnimationFrame(this.step.bind(this));
